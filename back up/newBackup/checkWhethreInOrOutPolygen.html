@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Polygon arrays</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    // This example requires the Geometry library. Include the libraries=geometry
+    // parameter when you first load the API. For example:
+    // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=geometry">
+
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 24.886, lng: -70.269},
+            zoom: 5,
+        });
+
+        var SLborderYouCreatedLatLng = [
+            {lat: 25.774, lng: -80.19},
+            {lat: 18.466, lng: -66.118},
+            {lat: 32.321, lng: -64.757}
+        ];
+
+        var SLLatLonForFunction = new google.maps.Polygon({paths: SLborderYouCreatedLatLng});
+
+        var SLBorderYouCreatedOnMap = new google.maps.Polygon({
+            paths: SLborderYouCreatedLatLng,
+            strokeColor: '#008C00',
+            strokeOpacity: 0.8,
+            strokeWeight: 2.5,
+           fillColor: '#000000',
+            pacity: 0.35
+        });
+        SLBorderYouCreatedOnMap.setMap(map);
+
+        /*==========================check weather inner or outer==========================================*/
+
+        var myLatLng = new google.maps.LatLng ( { lat:23.725370 , lng:  -73.026102 });  // meya menma pahala eke athi vidiyatada kala hakiya.
+        var myLatLng2 = new google.maps.LatLng(23.725370, -73.026102);
+        var myLatLng3 =  new google.maps.LatLng({ lat: 22.756281, lng: -59.754617 });
+
+        x =  google.maps.geometry.poly.containsLocation(  myLatLng, SLLatLonForFunction) ;
+
+        /* ==========================check weather inner or outer  end ==========================================*/
+
+
+
+        /*==================================find the shortest length===============================================*/
+
+        var All_Distencec = [];
+        var i;
+        var boatLatLong = new google.maps.LatLng({lat: 9.412496 , lng: 79.767952});
+
+        /*==================================find the shortest length end ===============================================*/
+
+        if(  google.maps.geometry.poly.containsLocation(  myLatLng, SLLatLonForFunction) == true ){
+
+            alert("in the polygen:- " + x);
+        }
+
+
+        else if(  google.maps.geometry.poly.containsLocation(  myLatLng, SLLatLonForFunction) == false){
+
+
+
+            alert("out the polygen:- " + x);
+
+            for (i = 0; i < SLOuterBorder.length; i++) {
+                var SLorderLatLng = new google.maps.LatLng( SLOuterBorder[i]);
+                All_Distencec[i] = google.maps.geometry.spherical.computeDistanceBetween(SLorderLatLng, boatLatLong);
+            }
+
+            Array.prototype.min = function() {
+                return Math.min.apply(null, this);
+            };
+
+            alert(All_Distencec[0]+"\n"+ All_Distencec[1]+ "\n" + All_Distencec[2]+"\n" + All_Distencec[3] );
+            alert("min value is: "+ All_Distencec.min());
+
+
+
+
+        }
+
+
+
+    }
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvWP2ZYJ1gikl5mQ6SUMVU2-5wIS3H2bU&libraries=geometry&callback=initMap"
+        async defer></script>
+</body>
+</html>

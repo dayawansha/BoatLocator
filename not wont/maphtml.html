@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<style>
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    #map_canvas {
+        width: 300px;
+        height: 100%
+    }
+    .infowindow * {
+        font-size: 90%;
+        margin: 0
+    }
+</style>
+
+</head>
+<body>
+
+
+<script src="https://geoxml3.googlecode.com/svn/branches/polys/geoxml3.js"></script>
+<script src="http://www.google.com/jsapi"></script>
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<table style="width:100%; height:100%;">
+    <tr style="width:100%; height:90%;">
+        <td style="width:60%; height:100%;">
+            <div id="map_canvas"></div>
+        </td>
+        <td>
+            <div id="sidebar" style="width:300px;height:400px; overflow:auto"></div>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

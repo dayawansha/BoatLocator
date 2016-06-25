@@ -1,0 +1,35 @@
+mapView = (MapView) findViewById(R.id.mapview);
+		mapView.setClickable(true);
+
+        mapView.setMultiTouchControls(true);
+        final float scale = getResources().getDisplayMetrics().density;
+        final int newScale = (int) (256 * scale);
+        String[] OSMSource = new String[2];
+        OSMSource[0] = "http://a.tile.openstreetmap.org/";
+        OSMSource[1] = "http://b.tile.openstreetmap.org/";
+        XYTileSource MapSource = new XYTileSource(
+                "OSM",
+                null,
+                1,
+                18,
+                newScale,
+                ".png",
+                OSMSource
+        );
+        mapView.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
+        mapController = (MapController) mapView.getController();
+        mapController.setZoom(9);
+        mapView.setMinZoomLevel(4);
+        mapView.setMaxZoomLevel(11);
+
+        ///import kml
+        Drawable defaultMarker = getResources().getDrawable(R.drawable.loc);
+        Bitmap defaultBitmap = ((BitmapDrawable) defaultMarker).getBitmap();
+        Style defaultStyle = new Style(defaultBitmap, 0x901010AA, 3.0f, 0x20AA1010);
+        KmlDocument kmlDocument = new KmlDocument();
+        File file = kmlDocument.getDefaultPathForAndroid("regions_new.kml");
+        boolean ok = kmlDocument.parseKMLFile(file);
+        mapView.setLayerType(mapView.LAYER_TYPE_SOFTWARE, null);
+        FolderOverlay kmlOverlay = (FolderOverlay) kmlDocument.mKmlRoot.buildOverlay(mapView, defaultStyle, null, kmlDocument);
+        mapView.getOverlays().add(kmlOverlay);
+        mapView.invalidate();

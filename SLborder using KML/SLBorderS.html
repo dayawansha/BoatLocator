@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #map {
+            width: 900px;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+<script>
+    function initMap() {
+        var mapDiv = document.getElementById('map');
+        var map = new google.maps.Map(mapDiv, {
+            center: new google.maps.LatLng(7.742291, 80.529785),
+            zoom: 6,
+        });
+
+        var ctaLayer = new google.maps.KmlLayer({
+            url: 'https://sites.google.com/site/slborderfinal/home/slborderl/SLborderL.kml',
+            map: map
+        });
+    }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+
+</body>
+</html>
+
+
+

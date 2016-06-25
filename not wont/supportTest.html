@@ -36,35 +36,30 @@
 
         var bermudaTriangle = new google.maps.Polygon({paths: triangleCoords});
 
-        var bermudaTriangle = new google.maps.Polygon({
-            paths: triangleCoords,
-            strokeColor: '#008C00',
-            strokeOpacity: 0.8,
-            strokeWeight: 2.5,
-           fillColor: '#000000',
-            pacity: 0.35
+        google.maps.event.addListener(map, 'click', function(e) {
+            var resultColor =
+                    google.maps.geometry.poly.containsLocation(e.latLng, bermudaTriangle) ?
+                            'red' :
+                            'green';
+
+            new google.maps.Marker({
+                position: e.latLng,
+                map: map,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    fillColor: resultColor,
+                    fillOpacity: .2,
+                    strokeColor: 'white',
+                    strokeWeight: .5,
+                    scale: 10
+                }
+            });
         });
-        bermudaTriangle.setMap(map);
-
-        var myLatLng = new google.maps.LatLng ( { lat:23.725370 , lng:  -73.026102 });  // meya menma pahala eke athi vidiyatada kala hakiya.
-        var myLatLng2 = new google.maps.LatLng(23.725370, -73.026102);
-        var myLatLng3 =  new google.maps.LatLng({ lat: 22.756281, lng: -59.754617 });
-
-        x =  google.maps.geometry.poly.containsLocation(  myLatLng, bermudaTriangle) ;
-
-        if(  google.maps.geometry.poly.containsLocation(  myLatLng, bermudaTriangle) == true ){
-
-            alert("in the polygen:- " + x);
-        }
-        else if(  google.maps.geometry.poly.containsLocation(  myLatLng, bermudaTriangle) == false){
-
-            alert("out the polygen:- " + x);
-        }
-
     }
-
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvWP2ZYJ1gikl5mQ6SUMVU2-5wIS3H2bU&libraries=geometry&callback=initMap"
         async defer></script>
+
+
 </body>
 </html>
