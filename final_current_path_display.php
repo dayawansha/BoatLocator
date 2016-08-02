@@ -38,7 +38,10 @@ echo $data;
 
 
 <script>
+<<<<<<< HEAD
+=======
 
+>>>>>>> origin/master
     var path = ('<?php echo $data; ?>') ;
     genarate_current_path(path,"bad");
 </script>

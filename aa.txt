@@ -1,0 +1,165 @@
+
+        var google_path2 = JSON.parse('<?php echo $data3; ?>');
+        var boatLatLongASInput2 = new google.maps.LatLng (google_path2[0]);
+
+
+        // var boatLatLongASInput2 = new google.maps.LatLng ( { lat:9.377270  , lng:  80.001412});   //  within border you created  :- lat=9.075000 long=80.393144
+        //  var boatLatLongASInput2 = new google.maps.LatLng ({ "lat":9.099491   ,  "lng":  79.533390 });   //  within two borders :-lat=9.099131    long=79.537861
+        //  var boatLatLongASInput2 = new google.maps.LatLng ( { lat:9.535773 , lng:79.107743 });   // croos the sri lanken border  :- lat=9.535773 long=79.107743
+
+
+        x =  google.maps.geometry.poly.containsLocation(  boatLatLongASInput2, LatLonForFunctionYuCreated) ;
+        y =  google.maps.geometry.poly.containsLocation(  boatLatLongASInput2, SLLatLonForFunction) ;
+        /*====================================================================================================================================*/
+        /*===================================================================================================================================*/
+        /* ==========================check weather inner or outer  end ==========================================*/
+
+        /*==================================find the shortest length===============================================*/
+
+        var All_Distencec2 = [];
+        var i;
+
+        /*==================================find the shortest length end ===============================================*/
+
+
+
+        if( google.maps.geometry.poly.containsLocation(  boatLatLongASInput2, SLLatLonForFunction) == true ) {
+
+            if (google.maps.geometry.poly.containsLocation(boatLatLongASInput2, LatLonForFunctionYuCreated) == true) {
+
+                alert("you are within 2 km to srilanken border. :- " );
+
+                /*************************************sitina thana pennweema**********************************************/
+
+                for (var i2 = 0; i2 < google_path2.length; i2++) {
+
+                    var marker = new google.maps.Marker({
+                        position: google_path2[0],
+                        map: map,
+                        icon: {
+                            path: google.maps.SymbolPath.CIRCLE,
+                            fillColor: "#0101DF",
+                            fillOpacity: 1,
+                            strokeColor: 'white',
+                            strokeWeight: .5,
+                            scale: 5
+                        }
+                    });
+
+                }
+            }
+            else if (google.maps.geometry.poly.containsLocation(boatLatLongASInput2, LatLonForFunctionYuCreated) == false) {
+
+                //    alert("You are within two borders :- " + x);
+
+                for (i2 = 0; i2 < SLOuterBorder.length; i2++) {
+                    var SLorderLatLng = new google.maps.LatLng(SLOuterBorder[i2]);
+                    All_Distencec2[i2] = google.maps.geometry.spherical.computeDistanceBetween(SLorderLatLng, boatLatLongASInput2);
+                }
+
+                Array.prototype.min = function () {
+                    return Math.min.apply(null, this);
+                };
+
+                //  alert(All_Distencec[0] + "\n" + All_Distencec[1] + "\n" + All_Distencec[2] + "\n" + All_Distencec[3]);
+                // alert("you have : " + All_Distencec.min() + " 'meeters' distance with Srilanken Fishing Border");
+            }
+
+
+            var contentString = '<div id="content" style="background: #FFFF4D; " >'+
+                '<div id="siteNotice" >'+
+                '</div>'+
+                '<h4 id="firstHeading" class="firstHeading">Going to cross the Border</h4>'+
+                '<div id="bodyContent">'+
+                "This boat have:<b> " + All_Distencec2.min() + "</b> m <br>distance with Srilanken Fishing Border."+
+
+                '<p>About the Boat, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+                'click here</a> '+
+                '</div>'+
+                '</div>';
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString,
+            });
+
+            /*************************************sitina thana pennweema**********************************************/
+            for (var i2 = 0; i2 < google_path2.length; i2++) {
+
+                var marker =  new google.maps.Marker({
+                    position: google_path2[0],
+                    map: map,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        fillColor:"#0101DF",
+                        fillOpacity: 1,
+                        strokeColor: 'white',
+                        strokeWeight: .5,
+                        scale: 5
+                    }
+                });
+
+                marker.addListener('click', function() {
+                    infowindow.open(map, marker);
+                });
+                infowindow.open(map,marker);
+            }
+
+
+        }
+        else if(  google.maps.geometry.poly.containsLocation(  boatLatLongASInput2, SLLatLonForFunction) == false){
+
+            // alert("you have cross the Sri lanken border:- " + y);
+
+            for (i2 = 0; i2 < SLOuterBorder.length; i2++) {
+                var SLorderLatLng = new google.maps.LatLng( SLOuterBorder[i]);
+                All_Distencec2[i] = google.maps.geometry.spherical.computeDistanceBetween(SLorderLatLng, boatLatLongASInput2);
+            }
+
+            Array.prototype.min = function() {
+                return Math.min.apply(null, this);
+            };
+
+            //  alert(All_Distencec[0]+"\n"+ All_Distencec[1]+ "\n" + All_Distencec[2]+"\n" + All_Distencec[3] );
+            //  alert("you have pass the Srilanken border : "+ All_Distencec.min()+ "  meeters......!!!, Please go to the Srilanken Fishing area. ");
+
+
+
+            var contentString = '<div id="content" style="background: #FF0000; " >'+
+                '<div id="siteNotice" >'+
+                '</div>'+
+                '<h4 id="firstHeading" class="firstHeading">Boat has crossed the Border</h4>'+
+                '<div id="bodyContent">'+
+                "you have pass the Srilanken border<b> " + All_Distencec2.min() + "</b> m...!! <br> Please go to the Srilanken Fishing area."+
+
+                '<p>About the Boat, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+                'click here</a> '+
+                '</div>'+
+                '</div>';
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString,
+            });
+
+            /*************************************sitina thana pennweema**********************************************/
+
+            for (var i2 = 0; i2 < google_path2.length; i2++) {
+
+                var marker =  new google.maps.Marker({
+                    position: google_path2[0],
+                    map: map,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        fillColor:"#0101DF",
+                        fillOpacity: 1,
+                        strokeColor: 'white',
+                        strokeWeight: .5,
+                        scale: 5
+                    }
+                });
+
+                marker.addListener('click', function() {
+                    infowindow.open(map, marker);
+                });
+                infowindow.open(map,marker);
+            }
+        }
