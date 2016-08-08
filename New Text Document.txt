@@ -1,0 +1,24 @@
+function CummBoats()
+{
+$connection = mysqli_connect("localhost", "root", "", "boattracker");
+$tableList = array();
+$res = mysqli_query($connection, "SHOW TABLES");
+while ($cRow = mysqli_fetch_array($res)) {
+$tableList[] = $cRow[0];
+}
+//print_r($tableList);
+//echo '<br>';
+//echo ($tableList[3]);
+$newArr = array("ad_fishery_officer","boat","boat_owner","coast_guard",
+"device","discrict","district_navy_officer","journy","launching_point",
+"ministry_officer","user");
+foreach($tableList as $val1){
+foreach($newArr as $val2){
+if($val1 = $val2){
+}else{
+array_push($newArr1,$val1);
+}
+}
+}
+}
+CummBoats();
